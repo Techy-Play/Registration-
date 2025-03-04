@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">User Management Dashboard</h2>
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">{{ user.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            {% if user.profile_photo %}
+                                <img src="{{ url_for('static', filename='uploads/' + user.profile_photo) }}" 
+                                     class="rounded-circle" 
+                                     alt="Profile Photo"
+                                     style="width: 100px; height: 100px; object-fit: cover;">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='default-avatar.png') }}" 
+                                     class="rounded-circle" 
+                                     alt="Default Avatar"
+                                     style="width: 100px; height: 100px; object-fit: cover;">
+                            {% endif %}
+                        </div>
+                        <div class="user-details">
+                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Mobile:</strong> {{ user.mobile }}</p>
+                            <p><strong>Gender:</strong> {{ user.gender }}</p>
+                            <p><strong>DOB:</strong> {{ user.dob.strftime('%Y-%m-%d') }}</p>
+                            <p><strong>Address:</strong> {{ user.address }}</p>
+                            <p><strong>Joined:</strong> {{ user.created_at.strftime('%Y-%m-%d') }}</p>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('admin_edit_user', user_id=user.id) }}" class="btn btn-primary">Edit User</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
